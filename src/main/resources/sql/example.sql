@@ -200,7 +200,20 @@ select me.mno		as memo_mno,
   	on me.membersrl = m.membersrl
  order by me.mno;
 	   
-	   
+	select 
+		d.dnl_code		as d_dnl_code,
+		d.dnl_type		as d_dnl_type,
+		dt.dnlno		as dt_dnlno,
+		dt.attend		as dt_attend,
+		dt.leave		as dt_leave,
+		dt.reason		as dt_reason,
+		dt.dnl_code		as dt_dnl_code,
+		dt.membersrl	as dt_membersrl
+ from dnl d right outer join dnltime dt 
+  on d.dnl_code = dt.dnl_code
+ where dnlno = 7;   
+ 
+ 
 	   
 	   
 	   

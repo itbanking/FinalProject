@@ -35,11 +35,11 @@
 				<th>is_admin</th>
 			</tr>
 			<tr>
-				<td><a href="/dnltime/member/${dnltime.member.membersrl}"><span class="glyphicon glyphicon-hand-right"></span>${dnltime.member.membersrl}</a></td>
-<%-- 				<td>${dnltime.member.membersrl}</td> --%>
+				<td>${dnltime.member.membersrl}</td>
 				<td>${dnltime.member.userid}</td>
 				<td>${dnltime.member.email}</td>
-				<td>${dnltime.member.username}</td>
+				<td><a href="/dnltime/member/${dnltime.member.membersrl}"><span class="glyphicon glyphicon-hand-right"></span>
+				${dnltime.member.username}</a></td>
 				<td>${dnltime.member.password}</td>
 				<td>${dnltime.member.isadmin}</td>
 			</tr>

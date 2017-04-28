@@ -76,10 +76,6 @@
  </c:choose>
 </c:forEach>
 
-<%-- 	<c:forEach var="member" items="${memberlist}"> --%>
-<%-- 			<fmt:formatDate value="${member.attend}" pattern="yyyy-MM-dd"/> --%>
-<%-- 			~ <fmt:formatDate  value="${member.leave}" pattern="yyyy-MM-dd"/><br> --%>
-<%-- 	</c:forEach> --%>
 		
 <td colspan="16">총 ${sum} 일 </td>
 </tr>
