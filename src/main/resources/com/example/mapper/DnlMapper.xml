@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.DnlMapper">
+
+<resultMap type="com.example.domain.Dnl" id="dnlWithDnltime">
+	<id 	property="dnlCode" 		column="dnl_code"/>
+	<result	property="dnlType" 		column="dnl_type"/>
+	
+	<collection property="dnltimes" ofType="com.example.domain.Dnltime">
+		<id 	property="dnlno" 		column="dnlno"/>
+		<result property="attend" 		column="attend"/>
+		<result property="leave" 		column="leave"/>
+		<result property="reason" 		column="reason"/>
+		<result property="dnlCode"		column="dnl_code"/>
+		<result property="membersrl" 	column="membersrl"/>
+	</collection>
+	
+</resultMap>
+
+<select id="selectAllWithDnltime" resultMap="dnlWithDnltime">
+	select 
+		d.dnl_code,
+		d.dnl_type,
+		dt.dnlno,
+		dt.attend,
+		dt.leave,
+		dt.reason,
+		dt.membersrl
+   from dnl d left outer join dnltime dt
+     on dt.dnl_code = d.dnl_code
+</select>
+
+<resultMap type="com.example.domain.Dnl" id="dnlWithDnltime2">
+	<collection property="dnltimes" column="d_dnl_code" select="selectdnltimesByCode"/>
+</resultMap>
+<select id="selectdnltimesByCode" resultType="com.example.domain.Dnltime">
+	select * 
+	  from dnl
+	 where dnl_code = #{d_dnl_code}
+</select>
+
+<select id="selectPageWithDnltime" resultMap="dnlWithDnltime2">
+	select d.*, d.dnl_code as d_dnl_code  
+	  from dnl d
+	offset #{firstItem} -1 rows
+	 fetch next #{itemsPerPage} rows only
+</select>
+
+<select id="selectByDnlCodeWithDnltime" resultMap="dnlWithDnltime">
+	select 
+		d.dnl_code,
+		d.dnl_type,
+		dt.dnlno,
+		dt.attend,
+		dt.leave,
+		dt.reason,
+		dt.membersrl
+   from dnl d left outer join dnltime dt
+  	 on dt.dnl_code = d.dnl_code
+  where d.dnl_code = #{dnlCode} 
+</select>
+
+</mapper>

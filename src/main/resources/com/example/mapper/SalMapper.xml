@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.SalMapper">
+
+<resultMap type="com.example.domain.Sal" id="SalWithMember">
+	<id		property="salno"		column="sal_salno"/>
+	<result	property="basicSal"		column="sal_basic_sal"/>
+	<result	property="overtimeSal"	column="sal_overtime_sal"/>
+	<result	property="aidSal"		column="sal_aid_sal"/>
+	<result	property="saldate"		column="sal_saldate"/>
+	<result	property="membersrl"	column="sal_membersrl"/>
+	<association property="member" javaType="com.example.domain.Member">
+		<id		property="membersrl"	column="member_membersrl"/>
+		<result	property="userid"		column="member_userid"/>
+		<result	property="email"		column="member_email"/>
+		<result	property="username"		column="member_username"/>
+		<result	property="password"		column="member_password"/>
+		<result	property="isadmin"		column="member_isadmin"/>
+	</association>
+</resultMap>
+
+<select id="selectAllWithMember" resultMap="SalWithMember">
+	select s.salno			as sal_salno,
+		   s.basic_sal		as sal_basic_sal,
+		   s.overtime_sal	as sal_overtime_sal,
+		   s.aid_sal		as sal_aid_sal,
+		   s.saldate		as sal_saldate,
+		   s.membersrl		as sal_membersrl,
+		   m.membersrl		as member_membersrl,
+		   m.userid			as member_userid,
+		   m.email			as member_email,
+		   m.username		as member_username,
+		   m.password		as member_password,
+		   m.isadmin		as member_isadmin
+	  from sal s left outer join member m
+	    on s.membersrl = m.membersrl
+	 order by s.salno
+</select>
+
+<select id="selectPageWithMember" resultMap="SalWithMember">
+	select s.salno			as sal_salno,
+		   s.basic_sal		as sal_basic_sal,
+		   s.overtime_sal	as sal_overtime_sal,
+		   s.aid_sal		as sal_aid_sal,
+		   s.saldate		as sal_saldate,
+		   s.membersrl		as sal_membersrl,
+		   m.membersrl		as member_membersrl,
+		   m.userid			as member_userid,
+		   m.email			as member_email,
+		   m.username		as member_username,
+		   m.password		as member_password,
+		   m.isadmin		as member_isadmin
+	  from sal s left outer join member m
+	    on s.membersrl = m.membersrl
+	 order by s.salno
+	offset #{firstItem} - 1 rows
+	 fetch next #{itemsPerPage} rows only
+</select>
+
+<select id="selectBySalnoWithMember" resultMap="SalWithMember">
+	select s.salno			as sal_salno,
+		   s.basic_sal		as sal_basic_sal,
+		   s.overtime_sal	as sal_overtime_sal,
+		   s.aid_sal		as sal_aid_sal,
+		   s.saldate		as sal_saldate,
+		   s.membersrl		as sal_membersrl,
+		   m.membersrl		as member_membersrl,
+		   m.userid			as member_userid,
+		   m.email			as member_email,
+		   m.username		as member_username,
+		   m.password		as member_password,
+		   m.isadmin		as member_isadmin
+	  from sal s left outer join member m
+	    on s.membersrl = m.membersrl
+	 where s.salno = #{salno}
+</select>
+
+<insert id="insert">
+	<selectKey keyProperty="salno" keyColumn="salno" resultType="int" order="BEFORE">
+		select sal_salno_seq.nextval from dual
+	</selectKey>
+	insert into sal
+	(
+		salno,
+		basic_sal,
+		overtime_sal,
+		comm,
+		aid_sal,
+		saldate,
+		membersrl
+	)
+	values
+	(
+		#{salno},
+		#{basicSal},
+		#{overtimeSal},
+		#{comm},
+		#{aidSal},
+		#{saldate},
+		#{membersrl}
+	)
+</insert>
+
+<update id="updateBySalno">
+	update sal
+	   set basic_sal		= #{basicSal},
+	       overtime_sal		= #{overtimeSal},
+	       comm				= #{comm},
+	       aid_sal			= #{aidSal},
+	       saldate			= #{saldate},
+	       membersrl		= #{membersrl}
+	 where salno = #{salno}
+</update>
+</mapper>

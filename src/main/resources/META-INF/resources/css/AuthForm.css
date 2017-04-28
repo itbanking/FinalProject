@@ -1,0 +1,63 @@
+.Title {
+	padding: 10px 20px;
+}
+
+.LoginBox {
+	width: 400px;
+	height: 540px;
+	margin: 0 auto 20px;
+	text-align: center;
+	border: 1px solid black;
+	border-radius: 16px;
+	background-color:#FAFAFA;
+}
+
+.Face {
+	margin: 0 20px auto;
+	width: 360px;
+	height: 180px;
+}
+
+.Circle {
+	width: 160px;
+	height: 160px;
+	margin: 40px auto;
+	background-color: #CCCCCC;
+	border-radius: 80px;
+    overflow:hidden;
+}
+
+.UpperPadding {
+	width: 160px;
+	height: 20px;
+	margin: 0;
+}
+
+.PplHead {
+	width: 60px;
+	height: 60px;
+	margin: 0px auto;
+	background-color: #EEEEEE;
+	border-radius: 30px;
+}
+
+.PplBody {
+	width: 120px;
+	height: 120px;
+	margin: 0px auto;
+	background-color: #EEEEEE;
+	border-radius: 30px;
+}
+
+.InputBox {
+	width: 360px;
+	height: 40px;
+	margin: 5px auto;
+}
+
+.Action {
+	width: 360px;
+	height: 40px;
+	margin: 4px auto;
+	font-size: 18pt;
+}

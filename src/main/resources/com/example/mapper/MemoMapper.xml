@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MemoMapper">
+
+<resultMap type="com.example.domain.Memo" id="MemoWithMember">
+	<id	property="mno"  column="memo_mno"/>
+	<result property="mname" column="memo_mname"/>
+	<result property="mcontent" column="memo_mcontent"/>
+	<result property="mdate" column="memo_mdate"/>
+	<result property="membersrl" column="memo_membersrl"/>
+	<association property="member" javaType="com.example.domain.Member">
+	<id		property="membersrl"	column="member_membersrl"/>
+	<result	property="userid"		column="member_userid"/>
+	<result	property="email"		column="member_email"/>
+	<result	property="username"		column="member_username"/>
+	<result	property="password"		column="member_password"/>
+	<result	property="isadmin"		column="member_isadmin"/>
+	</association>
+</resultMap>
+<select id="selectAllWithMember" resultMap="MemoWithMember">
+	select me.mno		as memo_mno,
+	   	   me.mname		as memo_mname,
+	       me.mcontent	as memo_mcontent,
+	       me.mdate		as memo_mdate,
+           me.membersrl	as memo_membersrl,
+	       m.membersrl		as member_membersrl,
+	       m.userid			as member_userid,
+	       m.email			as member_email,
+	       m.username		as member_username,
+	       m.password		as member_password,
+	       m.isadmin		as member_isadmin
+      from memo me left outer join member m
+  	    on me.membersrl = m.membersrl
+     order by me.mno
+
+</select>
+
+<select id="selectPageWithMember" resultMap="MemoWithMember">
+	select me.mno		as memo_mno,
+	   	   me.mname		as memo_mname,
+	       me.mcontent	as memo_mcontent,
+	       me.mdate		as memo_mdate,
+           me.membersrl	as memo_membersrl,
+	       m.membersrl		as member_membersrl,
+	       m.userid			as member_userid,
+	       m.email			as member_email,
+	       m.username		as member_username,
+	       m.password		as member_password,
+	       m.isadmin		as member_isadmin
+      from memo me left outer join member m
+  	    on me.membersrl = m.membersrl
+  order by me.mno
+ offset #{firstItem} - 1 rows
+  fetch next #{itemsPerPage} rows only
+</select>
+
+<select id="selectByMnoWithMember" resultMap="MemoWithMember">
+	select me.mno		as memo_mno,
+	   	   me.mname		as memo_mname,
+	       me.mcontent	as memo_mcontent,
+	       me.mdate		as memo_mdate,
+           me.membersrl	as memo_membersrl,
+	       m.membersrl		as member_membersrl,
+	       m.userid			as member_userid,
+	       m.email			as member_email,
+	       m.username		as member_username,
+	       m.password		as member_password,
+	       m.isadmin		as member_isadmin
+      from memo me left outer join member m
+  	    on me.membersrl = m.membersrl
+	 where me.mno = #{mno}
+</select>
+
+<insert id="insert">
+	<selectKey keyProperty="mno" keyColumn="mno" resultType="int" order="BEFORE">
+		select memo_mno_seq.nextval from dual
+	</selectKey>
+	insert into memo
+	(
+		mno,
+		mname,
+		mcontent,
+		mdate,
+		membersrl
+	)
+	values
+	(
+		#{mno},
+		#{mname},
+		#{mcontent},
+		#{mdate},
+		#{membersrl}
+	)
+</insert>
+
+<update id="updateByMno">
+	update memo
+	   set 
+	   	   mname		= #{mname},
+	   	   mcontent		= #{mcontent},
+	   	   mdate		= #{mdate},
+	   	   membersrl	= #{membersrl}
+	 where mno = #{mno}
+</update>
+
+</mapper>
